@@ -86,7 +86,7 @@ for pdf in pdfs:
     mes = data[2:4]
     dia = data[4:6]
     dt = datetime.datetime.strptime(ano + mes + dia, '%Y%m%d')
-    ultima_vez = datetime.datetime.now() - datetime.timedelta(days=20)
+    ultima_vez = datetime.datetime.now() - datetime.timedelta(days=1)
     if (ultima_vez < dt):
         print('Existe Esta Semana novo')
         print(pdf)
