@@ -3,8 +3,8 @@ import re
 import datetime
 import sys
 from bs4 import BeautifulSoup
-from sis_notificador import gmail
-from sis_notificador import keyring_store
+import gmail
+import keyring_store
 
 
 def send_email(user, pwd, recipient, subject, text):

@@ -1,5 +1,5 @@
 import smtplib
-from sis_notificador import keyring_store
+import keyring_store
 
 
 class Gmail():

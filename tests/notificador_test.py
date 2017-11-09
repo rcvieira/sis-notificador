@@ -5,7 +5,7 @@ from sis_notificador import notificador
 class TesteNotificador(unittest.TestCase):
 
     def testReadFile(self):
-        filename = './sis_notificador/tests/ultimo_esta_semana.txt'
+        filename = './tests/ultimo_esta_semana.txt'
         file = open(filename, 'w')
         file.write('171025')
         file.close()
@@ -18,7 +18,7 @@ class TesteNotificador(unittest.TestCase):
         self.assertEqual(dt, data)
 
     def testWriteFile(self):
-        filename = './sis_notificador/tests/ultimo_esta_semana.txt'
+        filename = './tests/ultimo_esta_semana.txt'
         file = open(filename, 'w')
         file.write('171025')
         file.close()
