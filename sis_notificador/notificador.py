@@ -11,12 +11,41 @@ def send_email(user, pwd, recipient, subject, text):
     try:
         gmail_sender = gmail.Gmail()
         gmail_sender.login(user, pwd)
-        gmail_sender.send_mail(recipient, subject, text)
+        gmail_sender.send_mails(recipient, subject, text)
         gmail_sender.close()
         print('successfully sent the mail')
     except Exception as ex:
         print("failed to send mail")
         print(ex)
+
+
+def send_emails(url_pdf, data_publicacao):
+    receivers = ['rcardoso@gmail.com']
+    subject = '[Notificador] SIS - Temos novidades'
+    texto = '''
+    Ol&aacute;!<br>
+    <br>
+    J&aacute; viu as novidades da SIS?<br>
+    <br>
+    <a href="{url_pdf}">CLIQUE AQUI e veja o Esta Semana de {data}</a><br>
+    <br>
+    <br>
+    Rodrigo Vieira<br>
+    Este email n&atilde;o &eacute; um email oficial da escola SIS<br>
+    <br>
+    <br>Voc&ecirc; est&aacute; recebendo este e-mail por que
+    se cadastrou na lista do notificador de Esta Semana da SIS
+    desenvolvido por mim.<br>
+    Se n&atilde;o quiser receber mais estas
+    notifica&ccedil;&otilde;es,
+    basta responder este email escrevendo SAIR no corpo do e-mail.
+    '''
+    body = texto.format(url_pdf=url_pdf,
+                        data=data_publicacao.strftime('%d/%m/%Y'))
+
+    usuario = 'rodrigovieirabot'
+    senha = passStore.get_pass(usuario)
+    send_email(usuario, senha, receivers, subject, body)
 
 
 def string_to_data(dataString):
@@ -54,7 +83,7 @@ def set_ultimo_esta_semana_enviado(esta_semana_filename, data):
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print('> keyting_store USER')
+        print('> notificador <caminho do arquivo de controle do esta semana>')
         sys.exit()
 
     esta_semana_filename = sys.argv[1]
@@ -114,22 +143,10 @@ if __name__ == '__main__':
         data_ultimo_enviado = get_ultimo_esta_semana_enviado(esta_semana_filename)
         if (data_ultimo_enviado < data_publicacao):
             print('Existe Esta Semana novo')
-            print(pdf)
             pdf_novo = True
-            set_ultimo_esta_semana_enviado(esta_semana_filename, data_publicacao)
             break
 
     if pdf_novo:
         url_pdf = url_sis + pdf
-        sender = 'rcardoso@gmail.com'
-        receivers = ['rcardoso@gmail.com']
-        subject = '[Notificador] SIS - Temos novidades'
-        titulo = 'J&aacute; viu o novo Esta Semana da SIS?<br><br>'
-        link = '<a href="{url_pdf}">CLIQUE AQUI para ver o Esta Semana de {data}</a>'.format(
-            url_pdf=url_pdf, data=data_publicacao.strftime('%d/%m/%Y'))
-        unsub1 = '<br><br>Voc&ecirc; est&aacute; recebendo este e-mail por que se cadastrou na lista do notificador de Esta Semana da SIS'
-        unsub2 = '<br>Para n&atilde;o receber mais estas notifica&ccedil;&otilde;es, basta responder este email escrevendo SAIR no corpo do e-mail.'
-        body = titulo + link + unsub1 + unsub2
-        usuario = 'rodrigovieirabot'
-        senha = passStore.get_pass(usuario)
-        send_email(usuario, senha, receivers, subject, body)
+        send_emails(url_pdf, data_publicacao)
+        set_ultimo_esta_semana_enviado(esta_semana_filename, data_publicacao)
