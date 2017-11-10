@@ -19,8 +19,7 @@ def send_email(user, pwd, recipient, subject, text):
         print(ex)
 
 
-def send_emails(url_pdf, data_publicacao):
-    receivers = ['rcardoso@gmail.com']
+def send_emails(receivers, url_pdf, data_publicacao):
     subject = '[Notificador] SIS - Temos novidades'
     texto = '''
     Ol&aacute;!<br>
@@ -30,8 +29,9 @@ def send_emails(url_pdf, data_publicacao):
     <a href="{url_pdf}">CLIQUE AQUI e veja o Esta Semana de {data}</a><br>
     <br>
     <br>
+    Abra&ccedil;o<br>
     Rodrigo Vieira<br>
-    Este email n&atilde;o &eacute; um email oficial da escola SIS<br>
+    Este n&atilde;o &eacute; um email oficial da escola SIS<br>
     <br>
     <br>Voc&ecirc; est&aacute; recebendo este e-mail por que
     se cadastrou na lista do notificador de Esta Semana da SIS
@@ -63,6 +63,13 @@ def data_to_string(data):
     return data.strftime('%y%m%d')
 
 
+def get_receivers_list(receivers_filename):
+    file = open(receivers_filename, 'r')
+    receivers = [line.strip() for line in file]
+    file.close()
+    return receivers
+
+
 def get_ultimo_esta_semana_enviado(esta_semana_filename):
     file = open(esta_semana_filename, 'r')
     dataString = file.read(6)
@@ -82,11 +89,12 @@ def set_ultimo_esta_semana_enviado(esta_semana_filename, data):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        print('> notificador <caminho do arquivo de controle do esta semana>')
+    if len(sys.argv) < 3:
+        print('notificador.py <arquivo de controle do esta semana> <arquivo de recebedores de email')
         sys.exit()
 
     esta_semana_filename = sys.argv[1]
+    receivers_filename = sys.argv[2]
 
     userAgent = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36'
     headers = {"User-Agent": userAgent}
@@ -148,5 +156,6 @@ if __name__ == '__main__':
 
     if pdf_novo:
         url_pdf = url_sis + pdf
-        send_emails(url_pdf, data_publicacao)
+        receivers = get_receivers_list(receivers_filename)
+        send_emails(receivers, url_pdf, data_publicacao)
         set_ultimo_esta_semana_enviado(esta_semana_filename, data_publicacao)
