@@ -11,7 +11,8 @@ setup(name='sis_notificador',
       install_requires=[
           'requests',
           'keyring',
-          'BeautifulSoup4'
+          'BeautifulSoup4',
+          'mailchimp3'
       ],
       test_suite='nose.collector',
       tests_require=['nose'],
