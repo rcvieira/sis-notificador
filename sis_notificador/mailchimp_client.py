@@ -27,6 +27,7 @@ class MailChimp_Client():
     def get_members_emails(self, list_id):
         members = self.client.lists.members.all(
             list_id=list_id,
+            get_all=True,
             fields="members.email_address",
             status='subscribed')
 
