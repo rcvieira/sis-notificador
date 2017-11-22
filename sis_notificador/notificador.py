@@ -28,17 +28,18 @@ def send_emails(receivers, url_pdf, data_publicacao):
     <br>
     <a href="{url_pdf}">CLIQUE AQUI e veja o Esta Semana de {data}</a><br>
     <br>
+    Abra&ccedil;o,<br>
+    Rodrigo Vieira<br><br>
+    P.S.: Este n&atilde;o &eacute; um email oficial da escola SIS<br>
     <br>
-    Abra&ccedil;o<br>
-    Rodrigo Vieira<br>
-    Este n&atilde;o &eacute; um email oficial da escola SIS<br>
-    <br>
-    <br>Voc&ecirc; est&aacute; recebendo este e-mail por que
-    se cadastrou na lista do notificador de Esta Semana da SIS
-    desenvolvido por mim.<br>
-    Se n&atilde;o quiser receber mais estas
-    notifica&ccedil;&otilde;es,
-    basta responder este email escrevendo SAIR no corpo do e-mail.
+    <br>Voc&ecirc; est&aacute; recebendo este e-mail por que se cadastrou<br>
+    na lista do notificador de Esta Semana da SIS.<br><br>
+    Se n&atilde;o quiser receber mais estas notifica&ccedil;&otilde;es,
+    <a href="https://mailchimp.us11.list-manage.com/unsubscribe?u=f802950604ac577d5b91757e4&id=7c1edc91ae">
+    CLIQUE AQUI
+    </a>.<br>
+    Voc&ecirc; ser&aacute; redirecionado para uma p&aacute;gina 
+    onde dever&aacute; informar seu email.
     '''
     body = texto.format(url_pdf=url_pdf,
                         data=data_publicacao.strftime('%d/%m/%Y'))
