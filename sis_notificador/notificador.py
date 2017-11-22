@@ -160,4 +160,4 @@ if __name__ == '__main__':
         send_emails(receivers, url_pdf, data_publicacao)
         set_ultimo_esta_semana_enviado(esta_semana_filename, data_publicacao)
     else:
-        print('Não encontrei PDF novo')
+        print('Nao encontrei PDF novo')
