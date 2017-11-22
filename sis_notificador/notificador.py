@@ -7,7 +7,6 @@ import keyring_store
 import gmail
 
 
-
 def send_email(user, pwd, recipient, subject, text):
     try:
         gmail_sender = gmail.Gmail()
@@ -91,7 +90,7 @@ def set_ultimo_esta_semana_enviado(esta_semana_filename, data):
 
 if __name__ == '__main__':
     if len(sys.argv) < 3:
-        print('notificador.py <arquivo de controle do esta semana> <arquivo de recebedores de email')
+        print('notificador.py <arquivo de controle do esta semana> <arquivo de recebedores de email>')
         sys.exit()
 
     esta_semana_filename = sys.argv[1]
@@ -160,3 +159,5 @@ if __name__ == '__main__':
         receivers = get_receivers_list(receivers_filename)
         send_emails(receivers, url_pdf, data_publicacao)
         set_ultimo_esta_semana_enviado(esta_semana_filename, data_publicacao)
+    else:
+        print('Não encontrei PDF novo')

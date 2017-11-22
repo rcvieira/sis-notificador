@@ -22,6 +22,8 @@ class KeyringStore():
         return password
 
 
+# Use o keyring_store para armazenar a senha do usuario ParentsBR
+# ou qualquer outro usuario.
 if __name__ == '__main__':
     if len(sys.argv) < 2:
         print('> keyting_store USER')
