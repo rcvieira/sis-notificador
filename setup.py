@@ -11,7 +11,7 @@ setup(name='sis_notificador',
       install_requires=[
           'requests',
           'keyring',
-          'keyring.alt'
+          'keyrings.alt',
           'BeautifulSoup4',
           'mailchimp3'
       ],
