@@ -11,3 +11,4 @@
 # local test files
 notificador.sh
 sis_notificador/receivers.txt
+sis_notificador/notificador.cfg
