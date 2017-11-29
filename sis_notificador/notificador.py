@@ -8,10 +8,16 @@ import gmail
 
 
 def send_email(user, pwd, recipient, subject, text):
+
+    list_unsubscribe_url = 'https://mailchimp.us11.list-manage.com/unsubscribe?u=f802950604ac577d5b91757e4&id=7c1edc91ae'
+
     try:
         gmail_sender = gmail.Gmail()
         gmail_sender.login(user, pwd)
-        gmail_sender.send_mails(recipient, subject, text)
+        gmail_sender.send_mails(recipient,
+                                subject,
+                                text,
+                                List_Unsubscribe=list_unsubscribe_url)
         gmail_sender.close()
         print('successfully sent the mail')
     except Exception as ex:
