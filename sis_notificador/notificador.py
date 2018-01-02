@@ -105,7 +105,7 @@ if __name__ == '__main__':
 
     userAgent = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36'
     headers = {"User-Agent": userAgent}
-    url_sis = 'http://www.swissinternationalschool.com.br'
+    url_sis = 'https://www.swissinternationalschool.com.br'
     url_login = url_sis + '/en-GB/Parents-Section'
 
     usuarioSIS = 'ParentsBR'
@@ -115,10 +115,13 @@ if __name__ == '__main__':
     passStore = keyring_store.KeyringStore()
     senha = passStore.get_pass(usuarioSIS)
 
+    if senha is None or senha == '':
+        print('senha não encontrada para o usuário: ' + usuarioSIS)
+        sys.exit()
+
     s = requests.Session()
     s.headers.update(headers)
     r = s.get(url_login)
-    # print(s.cookies)
     soup = BeautifulSoup(r.content, 'html.parser')
 
     VIEWSTATE = soup.find(id="__VIEWSTATE")['value']
@@ -132,20 +135,20 @@ if __name__ == '__main__':
                   "inhalt_0$Password": senha,
                   "inhalt_0$submitButton": "Log In"}
 
-    # print(login_data)
-
     r = s.post(url_login, data=login_data)
+
+    if 'Welcome! In this section' not in r.text:
+        print('Não logou!')
+        sys.exit()
 
     url_estasemana = url_sis + \
         '/en-GB/School-Locations/Brasilia/Parents-Section/Current-Information/Parent-Letters'
 
-    # print(s.cookies)
-    # print(r.cookies)
     resposta = s.get(url_estasemana,
                      allow_redirects=True)
 
-    # print(resposta)
-    # print(resposta.text)
+    print(resposta)
+    print(resposta.text)
 
     p = re.compile('href=\"(.*[0-9]+EstaSemana.*pdf)\"')
     pdfs = p.findall(resposta.text)
